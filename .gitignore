@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.db
+
+# Node
+node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Env
+.env
+
+# Build cache
+.vite/
+
+# Generated files
+data/*.pdf
+data/geocache.json
