@@ -288,7 +288,17 @@ def detect_all_competitors(latitude, longitude, radius_km, franchise_category="r
         key = (c['name'], round(c.get('latitude', 0) or 0, 4))
         if key not in seen:
             seen.add(key)
+            # Compute distance from search center
+            clat = c.get('latitude')
+            clon = c.get('longitude')
+            if clat and clon:
+                c['distance_km'] = round(_haversine(latitude, longitude, clat, clon), 2)
+            else:
+                c['distance_km'] = None
             unique.append(c)
+
+    # Sort by distance (closest first)
+    unique.sort(key=lambda x: x.get('distance_km') or float('inf'))
 
     return {
         'competitors': unique,
@@ -297,3 +307,12 @@ def detect_all_competitors(latitude, longitude, radius_km, franchise_category="r
         'search_radius_km': radius_km,
         'category': franchise_category,
     }
+
+
+def _haversine(lat1, lon1, lat2, lon2):
+    """Calculate the great-circle distance between two points in km."""
+    R = 6371
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2
+    return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))

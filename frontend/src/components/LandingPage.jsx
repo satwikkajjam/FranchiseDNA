@@ -95,6 +95,7 @@ function LandingPage({ onEnter }) {
 
       <footer className="landing-footer">
         <p>Census 2011 &middot; Google Places &middot; OpenStreetMap</p>
+        <p className="footer-copyright">&copy; 2026 FranchiseDNA. Built by Sathwik Kajjam. All rights reserved.</p>
       </footer>
     </div>
   );
